@@ -1,7 +1,6 @@
 from typing import Optional
 from fastapi import FastAPI, Request, BackgroundTasks
 import httpx
-import uvicorn
 
 app = FastAPI()
 
@@ -19,10 +18,4 @@ async def reply(request: Request):
 async def root(request: Request, background_tasks: BackgroundTasks):
     background_tasks.add_task(reply, request)
     return {"message": "Success!"}
-    
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
 
-if __name__ == '__main__':
-    uvicorn.run(app)
